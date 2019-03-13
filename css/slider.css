@@ -1,0 +1,42 @@
+h1{
+    text-align: center;
+}
+
+.item.hidden{
+    display: none;
+}
+.item.active{
+    display: block;
+    float:left;
+    height:auto;
+    cursor: pointer;
+}
+
+.item.active img{
+    width: 100%;
+    height: auto;
+
+}
+
+
+.navigation {
+	float: left;
+    position:relative;
+    text-align: center;
+    width:100%;
+    bottom:40px;
+    cursor:pointer;
+}
+.navigation .dot{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background:#fff;
+    cursor:pointer;
+    border-radius:16px;
+    margin:0 20px;
+    border:1px solid #666;
+}
+.navigation .active{
+    background:#666;
+}
