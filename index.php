@@ -50,22 +50,6 @@
             <img src="img/9.jpg" alt="" title="">
             <p>Img 9</p>
         </div>
-		<div class="item">
-            <img src="img/9.jpg" alt="" title="">
-            <p>Img 10</p>
-        </div>
-		<div class="item">
-            <img src="img/9.jpg" alt="" title="">
-            <p>Img 11</p>
-        </div>
-		<div class="item">
-            <img src="img/9.jpg" alt="" title="">
-            <p>Img 12</p>
-        </div>
-		<div class="item">
-            <img src="img/9.jpg" alt="" title="">
-            <p>Img 13</p>
-        </div>
     </div>
 
 </body>
