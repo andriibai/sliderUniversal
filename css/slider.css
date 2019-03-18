@@ -2,6 +2,10 @@ h1{
     text-align: center;
 }
 
+#slider_rw{
+  width: 60%;
+}
+
 .item.hidden{
     display: none;
 }
@@ -39,4 +43,38 @@ h1{
 }
 .navigation .active{
     background:#666;
+}
+
+.arrows{
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+    margin: 0 auto;
+}
+
+.prev:before,
+.next:before{
+    content: "";
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+    border-color: #000;
+    cursor: pointer;
+}
+.prev.end:before,
+.next.end:before{
+    opacity: 0.5;
+}
+.prev:before{
+    left: 0;
+    -webkit-transform: rotateZ(-45deg);
+    transform: rotateZ(-45deg);
+}
+.next:before{
+    right: 0;
+    -webkit-transform: rotateZ(135deg);
+    transform: rotateZ(135deg);
 }
