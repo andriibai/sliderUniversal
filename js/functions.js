@@ -136,21 +136,6 @@ sliderProto.prototype.nextArrow = function(){
         if (self.counter >= self.arr.length) {
             self.counter = 0;
         }
-
-        //$(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
-
-
-        //self.counter++;
-
-
-
-        //self.setSlides(self.arr[self.counter]);
-       // console.log(self.counter);
-        // if(self.counter >= self.arr.length) {
-        //     self.counter = 0;
-        // }
-
-
     });
 };
 
@@ -168,7 +153,6 @@ sliderProto.prototype.prevArrow = function(){
         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
         allSlidersItems.removeAttr('style');
 
-
         for(var k = 0; k < self.activeSlidesL; k++){
             self.setSlides(self.arr[self.counter]);
             self.counter--;
@@ -177,14 +161,6 @@ sliderProto.prototype.prevArrow = function(){
         if (self.counter <= 0 ) {
             self.counter = self.arr.length;
         }
-       // self.setSlides(self.arr[self.counter]);
-
-        console.log(self.counter);
-        //$(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
-
-        // if(self.counter < 1) {
-        //     self.counter = self.arr.length - 1;
-        // }
     });
 };
 
@@ -192,10 +168,9 @@ sliderProto.prototype.run = function(){
     if(this.autoSlide === true && this.slideEffect){
         var sliderContainer = $('#'+this.id);
         var allSlidersItems = $(sliderContainer).find('.item');
-
         var allSlidersDots = $('.navigation').find('.dot');
-        allSlidersDots.removeClass(''+this.activeClass);
 
+        allSlidersDots.removeClass(''+this.activeClass);
         allSlidersItems.removeClass(''+this.activeClass).addClass(''+this.hiddenClass);
         allSlidersItems.removeAttr('style');
 
@@ -216,16 +191,16 @@ sliderProto.prototype.init = function(){
     this.slide();
     this.setBullets();
     this.setArrows();
-    this.touchBullets();
+    //this.touchBullets();
     this.setActiveSlides();
-    this.nextArrow();
-    this.prevArrow();
+    //this.nextArrow();
+    //this.prevArrow();
 };
 
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-        activeSlidesL: 2,
+        activeSlidesL: 4,
         activeSlidesM: 3,
         activeSlidesS: 2,
         //activeSlidesXS: 1,
@@ -233,12 +208,12 @@ $(document).ready(function(){
         slideEffect: 'fadeIn',
         slideMargin: 2,
         autoSlide: true,
-        showArrows: true,
+        showArrows: false,
         showBullets: true,
         step: 1
     };
 
     var slider = new sliderProto(sliderParams);
     slider.init();
-    //setInterval(function(){slider.run()},slider.slideTime);
+    setInterval(function(){slider.run()},slider.slideTime);
 });
