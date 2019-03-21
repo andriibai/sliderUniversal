@@ -164,7 +164,6 @@ sliderProto.prototype.prevArrow = function(){
         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
         allSlidersItems.removeAttr('style');
 
-
         for(var k = 0; k < self.activeSlidesL; k++){
             self.setSlides(self.arr[self.counter]);
             self.counter--;
@@ -173,6 +172,7 @@ sliderProto.prototype.prevArrow = function(){
         if (self.counter <= 0 ) {
             self.counter = self.arr.length;
         }
+<<<<<<< HEAD
         console.log(self.counter);
     });
 };
@@ -183,6 +183,21 @@ sliderProto.prototype.run = function(){
     if(this.autoSlide === true && this.slideEffect && this.stopOnHover === true){
         var allSlidersDots = $('.navigation').find('.dot');
         this.removeAllActiveItems();
+=======
+    });
+};
+
+sliderProto.prototype.run = function(){
+    if(this.autoSlide === true && this.slideEffect){
+        var sliderContainer = $('#'+this.id);
+        var allSlidersItems = $(sliderContainer).find('.item');
+        var allSlidersDots = $('.navigation').find('.dot');
+
+        allSlidersDots.removeClass(''+this.activeClass);
+        allSlidersItems.removeClass(''+this.activeClass).addClass(''+this.hiddenClass);
+        allSlidersItems.removeAttr('style');
+
+>>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
         for(var k = 0; k < this.activeSlidesL; k++){
             this.setSlides(this.arr[this.counter]);
             this.counter++;
@@ -198,16 +213,25 @@ sliderProto.prototype.init = function(){
     this.slide();
     this.setBullets();
     this.setArrows();
-    this.touchBullets();
+    //this.touchBullets();
     this.setActiveSlides();
+<<<<<<< HEAD
    // this.nextArrow();
    // this.prevArrow();
+=======
+    //this.nextArrow();
+    //this.prevArrow();
+>>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
 };
 
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
+<<<<<<< HEAD
         activeSlidesL: 3,
+=======
+        activeSlidesL: 4,
+>>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
         activeSlidesM: 3,
         activeSlidesS: 2,
         //activeSlidesXS: 1,
@@ -215,7 +239,10 @@ $(document).ready(function(){
         slideEffect: 'fadeIn',
         slideMargin: 2,
         autoSlide: true,
+<<<<<<< HEAD
         stopOnHover: true,
+=======
+>>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
         showArrows: false,
         showBullets: true,
         step: 1
