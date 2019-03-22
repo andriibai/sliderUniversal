@@ -172,7 +172,7 @@ sliderProto.prototype.prevArrow = function(){
         if (self.counter <= 0 ) {
             self.counter = self.arr.length;
         }
-<<<<<<< HEAD
+
         console.log(self.counter);
     });
 };
@@ -183,7 +183,7 @@ sliderProto.prototype.run = function(){
     if(this.autoSlide === true && this.slideEffect && this.stopOnHover === true){
         var allSlidersDots = $('.navigation').find('.dot');
         this.removeAllActiveItems();
-=======
+
     });
 };
 
@@ -197,7 +197,6 @@ sliderProto.prototype.run = function(){
         allSlidersItems.removeClass(''+this.activeClass).addClass(''+this.hiddenClass);
         allSlidersItems.removeAttr('style');
 
->>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
         for(var k = 0; k < this.activeSlidesL; k++){
             this.setSlides(this.arr[this.counter]);
             this.counter++;
@@ -215,23 +214,17 @@ sliderProto.prototype.init = function(){
     this.setArrows();
     //this.touchBullets();
     this.setActiveSlides();
-<<<<<<< HEAD
    // this.nextArrow();
    // this.prevArrow();
-=======
     //this.nextArrow();
     //this.prevArrow();
->>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
 };
 
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-<<<<<<< HEAD
         activeSlidesL: 3,
-=======
         activeSlidesL: 4,
->>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
         activeSlidesM: 3,
         activeSlidesS: 2,
         //activeSlidesXS: 1,
@@ -239,10 +232,7 @@ $(document).ready(function(){
         slideEffect: 'fadeIn',
         slideMargin: 2,
         autoSlide: true,
-<<<<<<< HEAD
         stopOnHover: true,
-=======
->>>>>>> 26bc270c60855ab2971127ed43b8687ade4dbefe
         showArrows: false,
         showBullets: true,
         step: 1
