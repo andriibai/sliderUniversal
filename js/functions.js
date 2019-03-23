@@ -9,7 +9,7 @@ var sliderProto = function(sliderParams){
     this.slideEffect = sliderParams.slideEffect;
     this.slideMargin = sliderParams.slideMargin;
     this.autoSlide = sliderParams.autoSlide;
-    this.stopOnHover = sliderParams.stopOnHover;
+    this.onHover = sliderParams.onHover;
     this.activeArrows = sliderParams.activeArrows;
     this.showArrows = sliderParams.showArrows;
     this.showBullets = sliderParams.showBullets;
@@ -61,10 +61,22 @@ sliderProto.prototype.removeAllActiveItems = function (){
     $('.navigation').find('.dot').removeClass(''+this.activeClass);
 };
 
-sliderProto.prototype.hoverDetector = function(entity){
-// check if entity is on hover
-// return bool
-};
+// sliderProto.prototype.hoverDetector = function(entity){
+// // check if entity is on hover
+// // return bool
+// //if(this.stopOnHover === true) {
+//     $('#' + this.id).hover(function () {
+//
+//         console.log('stop');
+//
+//     }, function () {
+//
+//         console.log('play');
+//
+//     })
+// //}
+//
+// };
 
 sliderProto.prototype.setSlides = function(arr){
     $(arr).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
@@ -180,7 +192,7 @@ sliderProto.prototype.prevArrow = function(){
 
 /*---------- Auto running of slider ---------------- */
 sliderProto.prototype.run = function(){
-    if(this.autoSlide === true && this.slideEffect && this.stopOnHover === true){
+    if(this.autoSlide === true && this.slideEffect){
         var allSlidersDots = $('.navigation').find('.dot');
         this.removeAllActiveItems();
         for(var k = 0; k < this.activeSlidesL; k++){
@@ -195,6 +207,32 @@ sliderProto.prototype.run = function(){
 };
 
 
+sliderProto.prototype.setPlayStopHover = function() {
+    var self = this;
+    var interval;
+
+    interval = setInterval(function () {
+        self.run()
+    }, self.slideTime);
+
+
+    if (this.onHover === true) {
+        $('#' + this.id).hover(function () {
+
+            clearInterval(interval);
+
+        }, function () {
+
+            interval = setInterval(function () {
+                self.run()
+            }, self.slideTime);
+
+        })
+    }
+
+};
+
+
 sliderProto.prototype.init = function(){
     this.slide();
     this.setBullets();
@@ -203,21 +241,22 @@ sliderProto.prototype.init = function(){
     this.setActiveSlides();
     //this.nextArrow();
     //this.prevArrow();
+
+    this.setPlayStopHover();
 };
 
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-        activeSlidesL: 3,
-        activeSlidesL: 4,
+        activeSlidesL: 2,
         activeSlidesM: 3,
         activeSlidesS: 2,
         //activeSlidesXS: 1,
-        slideTime: 3000,
+        slideTime: 2000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
         autoSlide: true,
-        stopOnHover: true,
+        onHover: true,
         showArrows: false,
         showBullets: true,
         step: 1
@@ -225,5 +264,6 @@ $(document).ready(function(){
 
     var slider = new sliderProto(sliderParams);
     slider.init();
-    setInterval(function(){slider.run()},slider.slideTime);
+
+    //setInterval(function(){slider.run()},slider.slideTime);
 });
