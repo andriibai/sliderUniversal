@@ -9,7 +9,7 @@ var sliderProto = function(sliderParams){
     this.slideEffect = sliderParams.slideEffect;
     this.slideMargin = sliderParams.slideMargin;
     this.autoSlide = sliderParams.autoSlide;
-    this.onHover = sliderParams.onHover;
+    this.onHoverStop = sliderParams.onHoverStop;
     this.activeArrows = sliderParams.activeArrows;
     this.showArrows = sliderParams.showArrows;
     this.showBullets = sliderParams.showBullets;
@@ -56,6 +56,7 @@ sliderProto.prototype.slide = function(){
     }
 };
 
+
 sliderProto.prototype.removeAllActiveItems = function (){
     $('#'+this.id).find('.item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
     $('.navigation').find('.dot').removeClass(''+this.activeClass);
@@ -64,18 +65,6 @@ sliderProto.prototype.removeAllActiveItems = function (){
 // sliderProto.prototype.hoverDetector = function(entity){
 // // check if entity is on hover
 // // return bool
-// //if(this.stopOnHover === true) {
-//     $('#' + this.id).hover(function () {
-//
-//         console.log('stop');
-//
-//     }, function () {
-//
-//         console.log('play');
-//
-//     })
-// //}
-//
 // };
 
 sliderProto.prototype.setSlides = function(arr){
@@ -116,17 +105,6 @@ sliderProto.prototype.setArrows = function(){
     }
 };
 
-sliderProto.prototype.touchBullets = function(){
-    var self = this;
-    var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.item');
-    var allSlidersDots = $('.navigation').find('.dot');
-
-    $(allSlidersDots).click(function () {
-        $(allSlidersDots).removeClass(''+self.activeClass);
-        $(this).addClass(''+self.activeClass);
-    });
-};
 
 sliderProto.prototype.setActiveSlides = function(){
     var sliderContainer = $('#'+this.id);
@@ -139,60 +117,118 @@ sliderProto.prototype.setActiveSlides = function(){
 };
 
 
-sliderProto.prototype.nextArrow = function(){
-    var self = this;
-    var nextBtn = $('.arrows').find('.next');
-    var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.item');
-    var allSlidersDots = $('.navigation').find('.dot');
+// sliderProto.prototype.nextArrow = function(){
+//     var self = this;
+//     var nextBtn = $('.arrows').find('.next');
+//     var sliderContainer = $('#'+this.id);
+//     var allSlidersItems = $(sliderContainer).find('.item');
+//     var allSlidersDots = $('.navigation').find('.dot');
+//
+//     $(nextBtn).click(function () {
+//         allSlidersDots.removeClass(''+ self.activeClass);
+//         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
+//         allSlidersItems.removeAttr('style');
+//
+//         for(var k = 0; k < self.activeSlidesL; k++){
+//             self.setSlides(self.arr[self.counter]);
+//             self.counter++;
+//         }
+//
+//         if (self.counter >= self.arr.length) {
+//             self.counter = 0;
+//         }
+//     });
+// };
+//
+// sliderProto.prototype.prevArrow = function(){
+//     var self = this;
+//     var prevBtn = $('.arrows').find('.prev');
+//     var sliderContainer = $('#'+this.id);
+//     var allSlidersItems = $(sliderContainer).find('.item');
+//     var allSlidersDots = $('.navigation').find('.dot');
+//
+//     this.counter = this.arr.length;
+//
+//     $(prevBtn).click(function () {
+//         allSlidersDots.removeClass(''+ self.activeClass);
+//         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
+//         allSlidersItems.removeAttr('style');
+//
+//         for(var k = 0; k < self.activeSlidesL; k++){
+//             self.setSlides(self.arr[self.counter]);
+//             self.counter--;
+//         }
+//
+//         if (self.counter <= 0 ) {
+//             self.counter = self.arr.length;
+//         }
+//
+//         console.log(self.counter);
+//     });
+// };
 
-    $(nextBtn).click(function () {
-        allSlidersDots.removeClass(''+ self.activeClass);
-        allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
-        allSlidersItems.removeAttr('style');
 
-        for(var k = 0; k < self.activeSlidesL; k++){
-            self.setSlides(self.arr[self.counter]);
-            self.counter++;
-        }
-
-        if (self.counter >= self.arr.length) {
-            self.counter = 0;
-        }
-    });
-};
-
-sliderProto.prototype.prevArrow = function(){
+sliderProto.prototype.nextPrev = function () {
     var self = this;
     var prevBtn = $('.arrows').find('.prev');
+    var nextBtn = $('.arrows').find('.next');
+
+    self.counter = 0;
+
     var sliderContainer = $('#'+this.id);
     var allSlidersItems = $(sliderContainer).find('.item');
-    var allSlidersDots = $('.navigation').find('.dot');
 
-    this.counter = this.arr.length;
 
     $(prevBtn).click(function () {
-        allSlidersDots.removeClass(''+ self.activeClass);
         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
         allSlidersItems.removeAttr('style');
 
-        for(var k = 0; k < self.activeSlidesL; k++){
-            self.setSlides(self.arr[self.counter]);
-            self.counter--;
+        if (self.counter > 0) {
+                self.setSlides(self.arr[self.counter - 1]);
+                self.counter--;
+        } else {
+                self.setSlides(self.arr[self.arr.length - 1]);
+                self.counter = self.arr.length - 1;
         }
-
-        if (self.counter <= 0 ) {
-            self.counter = self.arr.length;
-        }
-
         console.log(self.counter);
+        console.log('prev');
     });
+
+
+    $(nextBtn).click(function () {
+
+         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
+         allSlidersItems.removeAttr('style');
+
+        // for(var k = 0; k < self.activeSlidesL; k++) {
+        //     self.setSlides(self.arr[self.counter]);
+        //     self.counter++;
+        // }
+        // if(self.counter >= self.arr.length) {
+        //     self.counter = 0;
+        // }
+
+        if (self.counter < self.arr.length - 1) {
+            for(var k = 0; k < self.activeSlidesL; k++) {
+                self.setSlides(self.arr[self.counter + 1]);
+                self.counter++;
+            }
+        } else {
+            for(var k = 0; k < self.activeSlidesL; k++) {
+                self.setSlides(self.arr[k]);
+                self.counter = 0;
+            }
+        }
+        console.log(self.counter);
+        console.log('next');
+    });
+
 };
 
-
-/*---------- Auto running of slider ---------------- */
+/**
+ * Functionally for auto run slider
+ */
 sliderProto.prototype.run = function(){
-    if(this.autoSlide === true && this.slideEffect){
         var allSlidersDots = $('.navigation').find('.dot');
         this.removeAllActiveItems();
         for(var k = 0; k < this.activeSlidesL; k++){
@@ -203,20 +239,50 @@ sliderProto.prototype.run = function(){
         if(this.counter >= this.arr.length) {
             this.counter = 0;
         }
-    }
 };
 
+// sliderProto.prototype.touchBullets = function(){
+//     var slideIndex = 1;
+//
+//     var self = this;
+//     var allSlidersDots = $('.navigation').find('.dot');
+//
+//     $(allSlidersDots).click(function () {
+//
+//         self.removeAllActiveItems();
+//
+//         if (self.counter > self.arr.length) {slideIndex = 1}
+//
+//         if (self.counter < 1) {slideIndex = self.arr.length}
+//
+//         for(var k = 0; k < self.arr.length; k++){
+//              self.setSlides(self.arr[self.])
+//         }
+//
+//         console.log(self.counter);
+//
+//         //$(allSlidersDots).removeClass(''+self.activeClass);
+//         //$(this).addClass(''+self.activeClass);
+//
+//
+//     });
+// };
 
+
+/**
+ *  Set auto running & stop hover of slider
+ */
 sliderProto.prototype.setPlayStopHover = function() {
     var self = this;
     var interval;
 
-    interval = setInterval(function () {
-        self.run()
-    }, self.slideTime);
+    if(this.autoSlide === true) {
+        interval = setInterval(function () {
+            self.run()
+        }, self.slideTime);
+    }
 
-
-    if (this.onHover === true) {
+    if (this.onHoverStop === true && this.autoSlide === true) {
         $('#' + this.id).hover(function () {
 
             clearInterval(interval);
@@ -237,11 +303,12 @@ sliderProto.prototype.init = function(){
     this.slide();
     this.setBullets();
     this.setArrows();
-    //this.touchBullets();
     this.setActiveSlides();
+
+    this.nextPrev();
     //this.nextArrow();
     //this.prevArrow();
-
+    //this.touchBullets();
     this.setPlayStopHover();
 };
 
@@ -255,9 +322,9 @@ $(document).ready(function(){
         slideTime: 2000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
-        autoSlide: true,
-        onHover: true,
-        showArrows: false,
+        autoSlide: false,
+        onHoverStop: true,
+        showArrows: true,
         showBullets: true,
         step: 1
     };
