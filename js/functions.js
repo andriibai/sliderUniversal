@@ -117,112 +117,45 @@ sliderProto.prototype.setActiveSlides = function(){
 };
 
 
-// sliderProto.prototype.nextArrow = function(){
-//     var self = this;
-//     var nextBtn = $('.arrows').find('.next');
-//     var sliderContainer = $('#'+this.id);
-//     var allSlidersItems = $(sliderContainer).find('.item');
-//     var allSlidersDots = $('.navigation').find('.dot');
-//
-//     $(nextBtn).click(function () {
-//         allSlidersDots.removeClass(''+ self.activeClass);
-//         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
-//         allSlidersItems.removeAttr('style');
-//
-//         for(var k = 0; k < self.activeSlidesL; k++){
-//             self.setSlides(self.arr[self.counter]);
-//             self.counter++;
-//         }
-//
-//         if (self.counter >= self.arr.length) {
-//             self.counter = 0;
-//         }
-//     });
-// };
-//
-// sliderProto.prototype.prevArrow = function(){
-//     var self = this;
-//     var prevBtn = $('.arrows').find('.prev');
-//     var sliderContainer = $('#'+this.id);
-//     var allSlidersItems = $(sliderContainer).find('.item');
-//     var allSlidersDots = $('.navigation').find('.dot');
-//
-//     this.counter = this.arr.length;
-//
-//     $(prevBtn).click(function () {
-//         allSlidersDots.removeClass(''+ self.activeClass);
-//         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
-//         allSlidersItems.removeAttr('style');
-//
-//         for(var k = 0; k < self.activeSlidesL; k++){
-//             self.setSlides(self.arr[self.counter]);
-//             self.counter--;
-//         }
-//
-//         if (self.counter <= 0 ) {
-//             self.counter = self.arr.length;
-//         }
-//
-//         console.log(self.counter);
-//     });
-// };
-
-
-sliderProto.prototype.nextPrev = function () {
+sliderProto.prototype.nextArrow = function(){
     var self = this;
-    var prevBtn = $('.arrows').find('.prev');
+    var allSlidersDots = $('.navigation').find('.dot');
     var nextBtn = $('.arrows').find('.next');
 
-    self.counter = 0;
-
-    var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.item');
-
-
-    $(prevBtn).click(function () {
-        allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
-        allSlidersItems.removeAttr('style');
-
-        if (self.counter > 0) {
-                self.setSlides(self.arr[self.counter - 1]);
-                self.counter--;
-        } else {
-                self.setSlides(self.arr[self.arr.length - 1]);
-                self.counter = self.arr.length - 1;
-        }
-        console.log(self.counter);
-        console.log('prev');
-    });
-
-
     $(nextBtn).click(function () {
-
-         allSlidersItems.removeClass(''+self.activeClass).addClass(''+self.hiddenClass);
-         allSlidersItems.removeAttr('style');
-
-        // for(var k = 0; k < self.activeSlidesL; k++) {
-        //     self.setSlides(self.arr[self.counter]);
-        //     self.counter++;
-        // }
-        // if(self.counter >= self.arr.length) {
-        //     self.counter = 0;
-        // }
-
-        if (self.counter < self.arr.length - 1) {
-            for(var k = 0; k < self.activeSlidesL; k++) {
-                self.setSlides(self.arr[self.counter + 1]);
-                self.counter++;
-            }
-        } else {
-            for(var k = 0; k < self.activeSlidesL; k++) {
-                self.setSlides(self.arr[k]);
-                self.counter = 0;
-            }
+        self.removeAllActiveItems();
+        for(var k = 0; k < self.activeSlidesL; k++) {
+            self.setSlides(self.arr[self.counter]);
+            self.counter++;
         }
-        console.log(self.counter);
-        console.log('next');
+        $(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
+        if(self.counter >= self.arr.length) {
+            self.counter = 0;
+        }
     });
+};
 
+
+/**
+ * Dont work !!!!
+ */
+sliderProto.prototype.prevArrow = function(){
+    var self = this;
+    var allSlidersDots = $('.navigation').find('.dot');
+    var prevBtn = $('.arrows').find('.prev');
+
+    self.counter = 0;
+    $(prevBtn).click(function () {
+        self.removeAllActiveItems();
+        for(var k = 0; k < self.activeSlidesL; k++){
+            self.setSlides(self.arr[self.arr.length - self.counter]);
+            self.counter++;
+        }
+
+        if (self.counter >= self.arr.length) {
+            self.counter = 0;
+        }
+    });
 };
 
 /**
@@ -241,32 +174,19 @@ sliderProto.prototype.run = function(){
         }
 };
 
-// sliderProto.prototype.touchBullets = function(){
-//     var slideIndex = 1;
-//
-//     var self = this;
-//     var allSlidersDots = $('.navigation').find('.dot');
-//
-//     $(allSlidersDots).click(function () {
-//
-//         self.removeAllActiveItems();
-//
-//         if (self.counter > self.arr.length) {slideIndex = 1}
-//
-//         if (self.counter < 1) {slideIndex = self.arr.length}
-//
-//         for(var k = 0; k < self.arr.length; k++){
-//              self.setSlides(self.arr[self.])
-//         }
-//
-//         console.log(self.counter);
-//
-//         //$(allSlidersDots).removeClass(''+self.activeClass);
-//         //$(this).addClass(''+self.activeClass);
-//
-//
-//     });
-// };
+
+/**
+ * Dont work !!!!
+ */
+sliderProto.prototype.touchBullets = function(){
+    var self = this;
+    var allSlidersDots = $('.navigation').find('.dot');
+
+    $(allSlidersDots).click(function () {
+        $(allSlidersDots).removeClass(''+self.activeClass);
+        $(this).addClass(''+self.activeClass);
+    });
+};
 
 
 /**
@@ -284,18 +204,13 @@ sliderProto.prototype.setPlayStopHover = function() {
 
     if (this.onHoverStop === true && this.autoSlide === true) {
         $('#' + this.id).hover(function () {
-
             clearInterval(interval);
-
         }, function () {
-
             interval = setInterval(function () {
                 self.run()
             }, self.slideTime);
-
         })
     }
-
 };
 
 
@@ -304,11 +219,9 @@ sliderProto.prototype.init = function(){
     this.setBullets();
     this.setArrows();
     this.setActiveSlides();
-
-    this.nextPrev();
-    //this.nextArrow();
+    this.nextArrow();
     //this.prevArrow();
-    //this.touchBullets();
+    this.touchBullets();
     this.setPlayStopHover();
 };
 
