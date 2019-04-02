@@ -56,16 +56,10 @@ sliderProto.prototype.slide = function(){
     }
 };
 
-
 sliderProto.prototype.removeAllActiveItems = function (){
     $('#'+this.id).find('.item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
     $('.navigation').find('.dot').removeClass(''+this.activeClass);
 };
-
-// sliderProto.prototype.hoverDetector = function(entity){
-// // check if entity is on hover
-// // return bool
-// };
 
 sliderProto.prototype.setSlides = function(arr){
     $(arr).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
@@ -105,7 +99,6 @@ sliderProto.prototype.setArrows = function(){
     }
 };
 
-
 sliderProto.prototype.setActiveSlides = function(){
     var sliderContainer = $('#'+this.id);
     var allSlidersItems = $(sliderContainer).find('.item');
@@ -116,7 +109,6 @@ sliderProto.prototype.setActiveSlides = function(){
     }
 };
 
-
 sliderProto.prototype.nextArrow = function(){
     var self = this;
     var allSlidersDots = $('.navigation').find('.dot');
@@ -124,9 +116,13 @@ sliderProto.prototype.nextArrow = function(){
 
     $(nextBtn).click(function () {
         self.removeAllActiveItems();
+        // if(self.counter >= self.arr.length) {
+        //     self.counter = 0;
+        // }
         for(var k = 0; k < self.activeSlidesL; k++) {
             self.setSlides(self.arr[self.counter]);
             self.counter++;
+            console.log('changed next: ' + self.counter);
         }
         $(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
         if(self.counter >= self.arr.length) {
@@ -134,7 +130,6 @@ sliderProto.prototype.nextArrow = function(){
         }
     });
 };
-
 
 /**
  * Dont work !!!!
@@ -144,16 +139,32 @@ sliderProto.prototype.prevArrow = function(){
     var allSlidersDots = $('.navigation').find('.dot');
     var prevBtn = $('.arrows').find('.prev');
 
-    self.counter = 0;
     $(prevBtn).click(function () {
         self.removeAllActiveItems();
-        for(var k = 0; k < self.activeSlidesL; k++){
-            self.setSlides(self.arr[self.arr.length - self.counter]);
-            self.counter++;
+
+        console.log('actual counter : ' + parseInt(self.counter));
+
+        var counterChange = parseInt(self.counter - (self.activeSlidesL)*2);
+
+        console.log('counterChange: ' + counterChange);
+
+        if(counterChange < 0){
+            //self.counter = self.arr.length - (self.activeSlidesL);
+            self.counter = parseInt(self.arr.length/self.activeSlidesL) * self.activeSlidesL;
+            console.log('changed counter < 0 : ' + self.counter);
+
+        }else if(counterChange >= 0){
+            self.counter = counterChange;
+            console.log('changed counter > 0 : ' + self.counter);
         }
 
-        if (self.counter >= self.arr.length) {
-            self.counter = 0;
+        for(var k = 0; k < self.activeSlidesL; k++){
+            self.setSlides(self.arr[self.counter]);
+            self.counter++;
+        }
+        //console.log('counter < 0 : ' + self.counter);
+        if (self.counter < 0) {
+            self.counter = self.arr.length;
         }
     });
 };
@@ -174,7 +185,6 @@ sliderProto.prototype.run = function(){
         }
 };
 
-
 /**
  * Dont work !!!!
  */
@@ -187,7 +197,6 @@ sliderProto.prototype.touchBullets = function(){
         $(this).addClass(''+self.activeClass);
     });
 };
-
 
 /**
  *  Set auto running & stop hover of slider
@@ -213,14 +222,13 @@ sliderProto.prototype.setPlayStopHover = function() {
     }
 };
 
-
 sliderProto.prototype.init = function(){
     this.slide();
     this.setBullets();
     this.setArrows();
     this.setActiveSlides();
     this.nextArrow();
-    //this.prevArrow();
+    this.prevArrow();
     this.touchBullets();
     this.setPlayStopHover();
 };
@@ -228,7 +236,7 @@ sliderProto.prototype.init = function(){
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-        activeSlidesL: 2,
+        activeSlidesL: 6,
         activeSlidesM: 3,
         activeSlidesS: 2,
         //activeSlidesXS: 1,
@@ -244,6 +252,5 @@ $(document).ready(function(){
 
     var slider = new sliderProto(sliderParams);
     slider.init();
-
     //setInterval(function(){slider.run()},slider.slideTime);
 });
