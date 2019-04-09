@@ -236,7 +236,7 @@ sliderProto.prototype.init = function(){
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-        activeSlidesL: 6,
+        activeSlidesL: 4,
         activeSlidesM: 3,
         activeSlidesS: 2,
         //activeSlidesXS: 1,
