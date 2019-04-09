@@ -4,7 +4,7 @@ var sliderProto = function(sliderParams){
     this.activeSlidesL = sliderParams.activeSlidesL;
     this.activeSlidesM = sliderParams.activeSlidesM;
     this.activeSlidesS = sliderParams.activeSlidesS;
-    //this.activeSlidesXS = sliderParams.activeSlidesXS;
+    this.activeSlidesXS = sliderParams.activeSlidesXS;
     this.slideTime = sliderParams.slideTime;
     this.slideEffect = sliderParams.slideEffect;
     this.slideMargin = sliderParams.slideMargin;
@@ -116,13 +116,9 @@ sliderProto.prototype.nextArrow = function(){
 
     $(nextBtn).click(function () {
         self.removeAllActiveItems();
-        // if(self.counter >= self.arr.length) {
-        //     self.counter = 0;
-        // }
         for(var k = 0; k < self.activeSlidesL; k++) {
             self.setSlides(self.arr[self.counter]);
             self.counter++;
-            console.log('changed next: ' + self.counter);
         }
         $(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
         if(self.counter >= self.arr.length) {
@@ -132,7 +128,7 @@ sliderProto.prototype.nextArrow = function(){
 };
 
 /**
- * Dont work !!!!
+ * Left click btn
  */
 sliderProto.prototype.prevArrow = function(){
     var self = this;
@@ -142,30 +138,29 @@ sliderProto.prototype.prevArrow = function(){
     $(prevBtn).click(function () {
         self.removeAllActiveItems();
 
-        console.log('actual counter : ' + parseInt(self.counter));
+        var actualCounter = parseInt(self.counter);
 
-        var counterChange = parseInt(self.counter - (self.activeSlidesL)*2);
-
-        console.log('counterChange: ' + counterChange);
-
-        if(counterChange < 0){
-            //self.counter = self.arr.length - (self.activeSlidesL);
-            self.counter = parseInt(self.arr.length/self.activeSlidesL) * self.activeSlidesL;
-            console.log('changed counter < 0 : ' + self.counter);
-
-        }else if(counterChange >= 0){
-            self.counter = counterChange;
-            console.log('changed counter > 0 : ' + self.counter);
+        if(actualCounter === 0){
+            self.counter = self.arr.length - (self.activeSlidesL*2);
+        }
+        if(actualCounter < 0){
+            self.counter = self.arr.length - self.activeSlidesL;
+        }
+        if(actualCounter > 0 && actualCounter > self.activeSlidesL) {
+            self.counter = actualCounter - (self.activeSlidesL * 2);
+        }
+        if(actualCounter === self.activeSlidesL){
+            self.counter = self.arr.length - (self.activeSlidesL);
         }
 
         for(var k = 0; k < self.activeSlidesL; k++){
             self.setSlides(self.arr[self.counter]);
             self.counter++;
         }
-        //console.log('counter < 0 : ' + self.counter);
         if (self.counter < 0) {
             self.counter = self.arr.length;
         }
+        console.log("Left click : "+ self.counter);
     });
 };
 
@@ -175,6 +170,10 @@ sliderProto.prototype.prevArrow = function(){
 sliderProto.prototype.run = function(){
         var allSlidersDots = $('.navigation').find('.dot');
         this.removeAllActiveItems();
+        //var actualCounter = this.counter;
+        if(this.counter >= this.arr.length) {
+            this.counter = 0;
+        }
         for(var k = 0; k < this.activeSlidesL; k++){
             this.setSlides(this.arr[this.counter]);
             this.counter++;
@@ -183,10 +182,11 @@ sliderProto.prototype.run = function(){
         if(this.counter >= this.arr.length) {
             this.counter = 0;
         }
+        console.log('Run: '+this.counter);
 };
 
 /**
- * Dont work !!!!
+ * To do
  */
 sliderProto.prototype.touchBullets = function(){
     var self = this;
@@ -236,14 +236,14 @@ sliderProto.prototype.init = function(){
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-        activeSlidesL: 4,
+        activeSlidesL: 3,
         activeSlidesM: 3,
         activeSlidesS: 2,
-        //activeSlidesXS: 1,
+        activeSlidesXS: 1,
         slideTime: 2000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
-        autoSlide: false,
+        autoSlide: true,
         onHoverStop: true,
         showArrows: true,
         showBullets: true,
