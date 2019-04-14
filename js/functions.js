@@ -1,10 +1,19 @@
+/**
+ * Universal Slider Light v1.0.0
+ * Author: Andrii Bai, Rostislav Yakuts
+ * https://github.com/andriibai/sliderUniversal.git
+ */
 
+/**
+ * Slider parameter
+ * @param sliderParams
+ */
 var sliderProto = function(sliderParams){
     this.id = sliderParams.id;
-    this.activeSlidesL = sliderParams.activeSlidesL;
-    this.activeSlidesM = sliderParams.activeSlidesM;
-    this.activeSlidesS = sliderParams.activeSlidesS;
-    this.activeSlidesXS = sliderParams.activeSlidesXS;
+    this.activeSlidesLg = sliderParams.activeSlidesLg;
+    this.activeSlidesMd = sliderParams.activeSlidesMd;
+    this.activeSlidesSm = sliderParams.activeSlidesSm;
+    this.activeSlidesXs = sliderParams.activeSlidesXs;
     this.slideTime = sliderParams.slideTime;
     this.slideEffect = sliderParams.slideEffect;
     this.slideMargin = sliderParams.slideMargin;
@@ -20,23 +29,31 @@ var sliderProto = function(sliderParams){
 };
 
 /**
+ * Return media screen to slides
+ * @return
+ */
+sliderProto.prototype.mediaScreenSlides = function () {
+    if($(window).width() >= 992){
+        return this.activeSlidesLg;
+    }else if($(window).width() >= 768){
+        return this.activeSlidesMd;
+    }else if($(window).width() < 768 && $(window).width() >= 576){
+        return this.activeSlidesSm;
+    }else if($(window).width() < 576){
+        return this.activeSlidesXs;
+    }
+};
+
+/**
  * Counts the width of each slide item
  * arguments: slideMargin property
  * @return int
  */
 sliderProto.prototype.slideWidth = function(){
     if(this.slideMargin){
-        if($(window).width() > 991){
-            return (100/this.activeSlidesL) - this.slideMargin;
-        }else{
-            return 0;
-        }
+        return (100/this.mediaScreenSlides()) - this.slideMargin;
     }else{
-        if($(window).width() > 991){
-            return (100/this.activeSlidesL);
-        }else{
-            return 0;
-        }
+        return (100/this.mediaScreenSlides());
     }
 };
 
@@ -48,7 +65,7 @@ sliderProto.prototype.cloneSlide = function(){
     var allSlidersItems = $(sliderContainer).find('.item');
 
     var m = 0;
-    var imgQuantity = allSlidersItems.length % this.activeSlidesL;
+    var imgQuantity = allSlidersItems.length % this.mediaScreenSlides();
 
     while (imgQuantity !==0) {
         var classAttr = allSlidersItems.attr('class');
@@ -60,13 +77,13 @@ sliderProto.prototype.cloneSlide = function(){
             '</div>');
 
         allSlidersItems.length = allSlidersItems.length + 1;
-        imgQuantity = allSlidersItems.length % this.activeSlidesL;
+        imgQuantity = allSlidersItems.length % this.mediaScreenSlides();
         m++;
     }
 };
 
 /**
- *	Push all items of slider in array
+ * Push all items of slider in array
  */
 sliderProto.prototype.slide = function(){
     var sliderContainer = $('#'+this.id);
@@ -75,13 +92,15 @@ sliderProto.prototype.slide = function(){
     $(allSlidersItems).addClass(''+this.hiddenClass);
     this.slidesQuantity = allSlidersItems.length;
     this.arr = [];
-    if($(window).width() > 991){
-        for(var i = 0; i < this.slidesQuantity; i++){
-            this.arr.push(allSlidersItems[i]);
-        }
+
+    for(var i = 0; i < this.slidesQuantity; i++){
+        this.arr.push(allSlidersItems[i]);
     }
 };
 
+/**
+ * Remove active class for all slides
+ */
 sliderProto.prototype.removeAllActiveItems = function (){
     $('#'+this.id).find('.item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
     $('.navigation').find('.dot').removeClass(''+this.activeClass);
@@ -97,12 +116,15 @@ sliderProto.prototype.setSlides = function(arr){
     }
 };
 
+/**
+ * Build dots if show true
+ */
 sliderProto.prototype.setBullets = function(){
     if(this.showBullets === true) {
         var finalQuantityOfSlides = 0;
         $('#'+this.id).append("<div class='navigation'></div>");
-        var numberSlidesPortion = parseInt(this.slidesQuantity/this.activeSlidesL);
-        var numberNotFullPortion = this.slidesQuantity - numberSlidesPortion * this.activeSlidesL;
+        var numberSlidesPortion = parseInt(this.slidesQuantity/this.mediaScreenSlides());
+        var numberNotFullPortion = this.slidesQuantity - numberSlidesPortion * this.mediaScreenSlides();
         if(numberNotFullPortion){
             finalQuantityOfSlides = numberSlidesPortion + 1;
         }else{
@@ -116,6 +138,9 @@ sliderProto.prototype.setBullets = function(){
     }
 };
 
+/**
+ * Build arrows if show arrows true
+ */
 sliderProto.prototype.setArrows = function(){
     if(this.showArrows === true){
         $('#'+this.id).append(
@@ -126,17 +151,22 @@ sliderProto.prototype.setArrows = function(){
     }
 };
 
+/**
+ * Set slides to first load
+ */
 sliderProto.prototype.setActiveSlides = function(){
     var sliderContainer = $('#'+this.id);
     var allSlidersItems = $(sliderContainer).find('.item');
-    for(var j = 0; j < this.activeSlidesL; j++){
+    for(var j = 0; j < this.mediaScreenSlides(); j++){
         $(allSlidersItems[j]).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
         this.setSlides(this.arr[this.counter]);
         this.counter++;
     }
 };
 
-
+/**
+ * Right click button
+ */
 sliderProto.prototype.nextArrow = function(){
     var self = this;
     var allSlidersDots = $('.navigation').find('.dot');
@@ -149,12 +179,12 @@ sliderProto.prototype.nextArrow = function(){
             self.counter = 0;
         }
 
-        for(var k = 0; k < self.activeSlidesL; k++) {
+        for(var k = 0; k < self.mediaScreenSlides(); k++) {
             self.setSlides(self.arr[self.counter]);
             self.counter++;
         }
 
-        $(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
+        $(allSlidersDots[self.counter/self.mediaScreenSlides() - 1]).addClass(''+self.activeClass);
         if(self.counter >= self.arr.length) {
             self.counter = 0;
         }
@@ -163,7 +193,7 @@ sliderProto.prototype.nextArrow = function(){
 };
 
 /**
- * Left click btn
+ * Left click button
  */
 sliderProto.prototype.prevArrow = function(){
     var self = this;
@@ -175,22 +205,22 @@ sliderProto.prototype.prevArrow = function(){
         var actualCounter = parseInt(self.counter);
 
         if(actualCounter === 0){
-            self.counter = self.arr.length - (self.activeSlidesL*2);
+            self.counter = self.arr.length - (self.mediaScreenSlides()*2);
         }
         if(actualCounter < 0){
-            self.counter = self.arr.length - self.activeSlidesL;
+            self.counter = self.arr.length - self.mediaScreenSlides();
         }
-        if(actualCounter > 0 && actualCounter > self.activeSlidesL) {
-            self.counter = actualCounter - (self.activeSlidesL * 2);
+        if(actualCounter > 0 && actualCounter > self.mediaScreenSlides()) {
+            self.counter = actualCounter - (self.mediaScreenSlides() * 2);
         }
-        if(actualCounter === self.activeSlidesL){
-            self.counter = self.arr.length - (self.activeSlidesL);
+        if(actualCounter === self.mediaScreenSlides()){
+            self.counter = self.arr.length - (self.mediaScreenSlides());
         }
-        for(var k = 0; k < self.activeSlidesL; k++){
+        for(var k = 0; k < self.mediaScreenSlides(); k++){
             self.setSlides(self.arr[self.counter]);
             self.counter++;
         }
-        $(allSlidersDots[self.counter/self.activeSlidesL - 1]).addClass(''+self.activeClass);
+        $(allSlidersDots[self.counter/self.mediaScreenSlides() - 1]).addClass(''+self.activeClass);
         if (self.counter < 0) {
             self.counter = self.arr.length;
         }
@@ -206,18 +236,18 @@ sliderProto.prototype.run = function(){
         if(this.counter >= this.arr.length) {
             this.counter = 0;
         }
-        for(var k = 0; k < this.activeSlidesL; k++){
+        for(var k = 0; k < this.mediaScreenSlides(); k++){
             this.setSlides(this.arr[this.counter]);
             this.counter++;
         }
-        $(allSlidersDots[this.counter/this.activeSlidesL - 1]).addClass(''+this.activeClass);
+        $(allSlidersDots[this.counter/this.mediaScreenSlides() - 1]).addClass(''+this.activeClass);
         if(this.counter >= this.arr.length) {
             this.counter = 0;
         }
 };
 
 /**
- * To do
+ *  Functionally for touch on dots
  */
 sliderProto.prototype.touchBullets = function(){
     var self = this;
@@ -228,9 +258,9 @@ sliderProto.prototype.touchBullets = function(){
         self.removeAllActiveItems();
         $(this).addClass(''+self.activeClass);
         var d = $(this).index();
-        var actualDots = self.activeSlidesL * d;
+        var actualDots = self.mediaScreenSlides() * d;
 
-        for(var k = 0; k < self.activeSlidesL; k++){
+        for(var k = 0; k < self.mediaScreenSlides(); k++){
             self.setSlides(self.arr[actualDots]);
             actualDots++;
         }
@@ -263,6 +293,9 @@ sliderProto.prototype.setPlayStopHover = function() {
     }
 };
 
+/**
+ * Init function for slider
+ */
 sliderProto.prototype.init = function(){
     this.cloneSlide();
     this.slide();
@@ -275,17 +308,20 @@ sliderProto.prototype.init = function(){
     this.setPlayStopHover();
 };
 
+/**
+ * Parameters for user
+ */
 $(document).ready(function(){
     var sliderParams = {
         id: 'slider_rw',
-        activeSlidesL: 6,
-        activeSlidesM: 2,
-        activeSlidesS: 1,
-        activeSlidesXS: 1,
+        activeSlidesLg: 5,
+        activeSlidesMd: 4,
+        activeSlidesSm: 2,
+        activeSlidesXs: 1,
         slideTime: 2000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
-        autoSlide: true,
+        autoSlide: false,
         onHoverStop: true,
         showArrows: true,
         showBullets: true,
