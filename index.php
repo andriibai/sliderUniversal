@@ -14,7 +14,7 @@
     <div>
         <h1>Slider JS</h1>
     </div>
-    <div id="slider_rw">
+    <div id="slider-un">
         <div class="item ">
             <img src="img/1.jpg" alt="" title="">
             <p>Img 1</p>

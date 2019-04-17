@@ -24,7 +24,6 @@ var sliderProto = function(sliderParams){
     this.showBullets = sliderParams.showBullets;
     this.hiddenClass = 'hidden';
     this.activeClass = 'active';
-    this.step = sliderParams.step;
     this.counter = 0;
 };
 
@@ -73,7 +72,6 @@ sliderProto.prototype.cloneSlide = function(){
         var imageAttr = imageClone.attr('src');
         $('#' + this.id).append('<div class="' + classAttr + '">' +
             '<img src="' + imageAttr + ' " alt />' +
-            '<p>imgClone '+ m +' </p>' +
             '</div>');
 
         allSlidersItems.length = allSlidersItems.length + 1;
@@ -102,6 +100,7 @@ sliderProto.prototype.slide = function(){
  * Remove active class for all slides
  */
 sliderProto.prototype.removeAllActiveItems = function (){
+    $('#'+this.id).find('.item').removeClass('animated '+''+this.slideEffect);
     $('#'+this.id).find('.item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
     $('.navigation').find('.dot').removeClass(''+this.activeClass);
 };
@@ -109,6 +108,11 @@ sliderProto.prototype.removeAllActiveItems = function (){
 
 sliderProto.prototype.setSlides = function(arr){
     $(arr).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
+
+    if(this.slideEffect){
+        $(arr).addClass('animated '+''+this.slideEffect);
+    }
+
     if(this.slideMargin){
         $(arr).css({'width': this.slideWidth()+'%','margin-right':this.slideMargin/2+'%','margin-left':this.slideMargin/2+'%'});
     }else{
@@ -313,19 +317,18 @@ sliderProto.prototype.init = function(){
  */
 $(document).ready(function(){
     var sliderParams = {
-        id: 'slider_rw',
-        activeSlidesLg: 5,
+        id: 'slider-un',
+        activeSlidesLg: 4,
         activeSlidesMd: 4,
         activeSlidesSm: 2,
         activeSlidesXs: 1,
         slideTime: 2000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
-        autoSlide: false,
+        autoSlide: true,
         onHoverStop: true,
         showArrows: true,
         showBullets: true,
-        step: 1
     };
 
     var slider = new sliderProto(sliderParams);
