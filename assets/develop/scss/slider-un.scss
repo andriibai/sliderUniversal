@@ -1,0 +1,116 @@
+@import "components/lib";
+@import "components/mixins";
+@import "components/reset";
+
+html{
+  background: #ededed;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+a{
+  text-decoration: none;
+}
+
+.wrapper{
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.wrapper{
+  @include md-min {
+    width: 750px;
+  }
+  @include lg-min{
+    width: 970px;
+  }
+  @include xl-min{
+    width: 1170px;
+  }
+}
+
+section{
+  padding: 50px 0;
+}
+h1{
+  color: #c72f4e;
+  text-align: center;
+  font-size: 36px;
+}
+.copyright{
+  text-align: center;
+  display: block;
+}
+
+.slider{
+  width: 100%;
+  position: relative;
+  &__item{
+    &.hidden{
+      display: none;
+    }
+    &.active{
+      display: block;
+      float:left;
+      height:auto;
+      cursor: pointer;
+    }
+  }
+  &__img{
+  }
+  &__bullets{
+    display: flex;
+    justify-content: center;
+    width:100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor:pointer;
+  }
+  &__dot{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background:#fff;
+    cursor:pointer;
+    border-radius:16px;
+    margin:0 20px;
+    border:1px solid #c72f4e;
+    @include md-max{
+      margin:0 6px;
+    }
+    &.active{
+      background: #c72f4e;
+    }
+  }
+  &__arrows{
+
+  }
+  &__prev,
+  &__next{
+    position: absolute;
+    top: 25%;
+    margin-top: 12px;
+    &:before{
+      content: "";
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-top: 3px solid;
+      border-left: 3px solid;
+      border-color: #c72f4e;
+      cursor: pointer;
+    }
+  }
+  &__prev{
+    left: -10px;
+    transform: rotateZ(-45deg);}
+  &__next{
+    right: -10px;
+    transform: rotateZ(135deg);
+  }
+}

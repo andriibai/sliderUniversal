@@ -61,7 +61,7 @@ sliderProto.prototype.slideWidth = function(){
  */
 sliderProto.prototype.cloneSlide = function(){
     var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.item');
+    var allSlidersItems = $(sliderContainer).find('.slider__item');
 
     var m = 0;
     var imgQuantity = allSlidersItems.length % this.mediaScreenSlides();
@@ -85,7 +85,7 @@ sliderProto.prototype.cloneSlide = function(){
  */
 sliderProto.prototype.slide = function(){
     var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.item');
+    var allSlidersItems = $(sliderContainer).find('.slider__item');
 
     $(allSlidersItems).addClass(''+this.hiddenClass);
     this.slidesQuantity = allSlidersItems.length;
@@ -100,9 +100,9 @@ sliderProto.prototype.slide = function(){
  * Remove active class for all slides
  */
 sliderProto.prototype.removeAllActiveItems = function (){
-    $('#'+this.id).find('.item').removeClass('animated '+''+this.slideEffect);
-    $('#'+this.id).find('.item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
-    $('.navigation').find('.dot').removeClass(''+this.activeClass);
+    $('#'+this.id).find('.slider__item').removeClass('animated '+''+this.slideEffect);
+    $('#'+this.id).find('.slider__item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
+    $('.slider__bullets').find('.slider__dot').removeClass(''+this.activeClass);
 };
 
 
@@ -126,7 +126,7 @@ sliderProto.prototype.setSlides = function(arr){
 sliderProto.prototype.setBullets = function(){
     if(this.showBullets === true) {
         var finalQuantityOfSlides = 0;
-        $('#'+this.id).append("<div class='navigation'></div>");
+        $('#'+this.id).append("<div class='slider__bullets'></div>");
         var numberSlidesPortion = parseInt(this.slidesQuantity/this.mediaScreenSlides());
         var numberNotFullPortion = this.slidesQuantity - numberSlidesPortion * this.mediaScreenSlides();
         if(numberNotFullPortion){
@@ -135,9 +135,9 @@ sliderProto.prototype.setBullets = function(){
             finalQuantityOfSlides = numberSlidesPortion;
         }
         for (var d = 0; d < finalQuantityOfSlides; d++) {
-            $('.navigation').append("<div class='dot'></div>");
+            $('.slider__bullets').append("<div class='slider__dot'></div>");
         }
-        var allSlidersDots = $('.navigation').find('.dot');
+        var allSlidersDots = $('.slider__bullets').find('.slider__dot');
         $(allSlidersDots[0]).addClass(''+this.activeClass);
     }
 };
@@ -148,9 +148,9 @@ sliderProto.prototype.setBullets = function(){
 sliderProto.prototype.setArrows = function(){
     if(this.showArrows === true){
         $('#'+this.id).append(
-            '<div class="arrows">' +
-            '<span class="prev"></span>' +
-            '<span class="next"></span>' +
+            '<div class="slider__arrows">' +
+            '<span class="slider__prev"></span>' +
+            '<span class="slider__next"></span>' +
             '</div>');
     }
 };
@@ -160,7 +160,7 @@ sliderProto.prototype.setArrows = function(){
  */
 sliderProto.prototype.setActiveSlides = function(){
     var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.item');
+    var allSlidersItems = $(sliderContainer).find('.slider__item');
     for(var j = 0; j < this.mediaScreenSlides(); j++){
         $(allSlidersItems[j]).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
         this.setSlides(this.arr[this.counter]);
@@ -173,8 +173,8 @@ sliderProto.prototype.setActiveSlides = function(){
  */
 sliderProto.prototype.nextArrow = function(){
     var self = this;
-    var allSlidersDots = $('.navigation').find('.dot');
-    var nextBtn = $('.arrows').find('.next');
+    var allSlidersDots = $('.slider__bullets').find('.slider__dot');
+    var nextBtn = $('.slider__arrows').find('.slider__next');
 
     $(nextBtn).click(function () {
         self.removeAllActiveItems();
@@ -201,8 +201,8 @@ sliderProto.prototype.nextArrow = function(){
  */
 sliderProto.prototype.prevArrow = function(){
     var self = this;
-    var allSlidersDots = $('.navigation').find('.dot');
-    var prevBtn = $('.arrows').find('.prev');
+    var allSlidersDots = $('.slider__bullets').find('.slider__dot');
+    var prevBtn = $('.slider__arrows').find('.slider__prev');
 
     $(prevBtn).click(function () {
         self.removeAllActiveItems();
@@ -235,7 +235,7 @@ sliderProto.prototype.prevArrow = function(){
  * Functionally for auto run slider
  */
 sliderProto.prototype.run = function(){
-        var allSlidersDots = $('.navigation').find('.dot');
+        var allSlidersDots = $('.slider__bullets').find('.slider__dot');
         this.removeAllActiveItems();
         if(this.counter >= this.arr.length) {
             this.counter = 0;
@@ -255,7 +255,7 @@ sliderProto.prototype.run = function(){
  */
 sliderProto.prototype.touchBullets = function(){
     var self = this;
-    var allSlidersDots = $('.navigation').find('.dot');
+    var allSlidersDots = $('.slider__bullets').find('.slider__dot');
 
     $(allSlidersDots).click(function () {
         $(allSlidersDots).removeClass(''+self.activeClass);
@@ -319,13 +319,13 @@ $(document).ready(function(){
     var sliderParams = {
         id: 'slider-un',
         activeSlidesLg: 4,
-        activeSlidesMd: 4,
+        activeSlidesMd: 3,
         activeSlidesSm: 2,
         activeSlidesXs: 1,
         slideTime: 2000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
-        autoSlide: true,
+        autoSlide: false,
         onHoverStop: true,
         showArrows: true,
         showBullets: true,
