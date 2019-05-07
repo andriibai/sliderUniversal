@@ -322,10 +322,10 @@ $(document).ready(function(){
         activeSlidesMd: 3,
         activeSlidesSm: 2,
         activeSlidesXs: 1,
-        slideTime: 2000,
+        slideTime: 3000,
         slideEffect: 'fadeIn',
         slideMargin: 2,
-        autoSlide: false,
+        autoSlide: true,
         onHoverStop: true,
         showArrows: true,
         showBullets: true,
@@ -333,5 +333,4 @@ $(document).ready(function(){
 
     var slider = new sliderProto(sliderParams);
     slider.init();
-    //setInterval(function(){slider.run()},slider.slideTime);
 });

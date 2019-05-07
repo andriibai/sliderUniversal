@@ -1,50 +1,8 @@
 @import "components/lib";
 @import "components/mixins";
 @import "components/reset";
+@import "components/tools";
 
-html{
-  background: #ededed;
-}
-
-html, body {
-  overflow-x: hidden;
-}
-
-a{
-  text-decoration: none;
-}
-
-.wrapper{
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.wrapper{
-  @include md-min {
-    width: 750px;
-  }
-  @include lg-min{
-    width: 970px;
-  }
-  @include xl-min{
-    width: 1170px;
-  }
-}
-
-section{
-  padding: 50px 0;
-}
-h1{
-  color: #c72f4e;
-  text-align: center;
-  font-size: 36px;
-}
-.copyright{
-  text-align: center;
-  display: block;
-}
 
 .slider{
   width: 100%;
