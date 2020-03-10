@@ -1,6 +1,7 @@
 /**
- * Universal Slider Light v1.0.0
- * Author: Andrii Bai, Rostislav Yakuts
+ * Universal Slider Light v1.2.0
+ * Author: Andrii Bai
+ * Description :  using ES6
  * https://github.com/andriibai/sliderUniversal.git
  */
 
@@ -8,30 +9,31 @@
  * Slider parameter
  * @param sliderParams
  */
-var sliderProto = function(sliderParams){
-    this.id = sliderParams.id;
-    this.activeSlidesLg = sliderParams.activeSlidesLg;
-    this.activeSlidesMd = sliderParams.activeSlidesMd;
-    this.activeSlidesSm = sliderParams.activeSlidesSm;
-    this.activeSlidesXs = sliderParams.activeSlidesXs;
-    this.slideTime = sliderParams.slideTime;
-    this.slideEffect = sliderParams.slideEffect;
-    this.slideMargin = sliderParams.slideMargin;
-    this.autoSlide = sliderParams.autoSlide;
-    this.onHoverStop = sliderParams.onHoverStop;
-    this.activeArrows = sliderParams.activeArrows;
-    this.showArrows = sliderParams.showArrows;
-    this.showBullets = sliderParams.showBullets;
-    this.hiddenClass = 'hidden';
-    this.activeClass = 'active';
-    this.counter = 0;
-};
+class SliderUniversal{
+    constructor(sliderParams) {
+        this.id = sliderParams.id;
+        this.activeSlidesLg = sliderParams.activeSlidesLg;
+        this.activeSlidesMd = sliderParams.activeSlidesMd;
+        this.activeSlidesSm = sliderParams.activeSlidesSm;
+        this.activeSlidesXs = sliderParams.activeSlidesXs;
+        this.slideTime = sliderParams.slideTime;
+        this.slideEffect = sliderParams.slideEffect;
+        this.slideMargin = sliderParams.slideMargin;
+        this.autoSlide = sliderParams.autoSlide;
+        this.onHoverStop = sliderParams.onHoverStop;
+        this.activeArrows = sliderParams.activeArrows;
+        this.showArrows = sliderParams.showArrows;
+        this.showBullets = sliderParams.showBullets;
+        this.hiddenClass = 'hidden';
+        this.activeClass = 'active';
+        this.counter = 0;
+    }
 
 /**
  * Return media screen to slides
  * @return
  */
-sliderProto.prototype.mediaScreenSlides = function () {
+mediaScreenSlides(){
     if($(window).width() >= 992){
         return this.activeSlidesLg;
     }else if($(window).width() >= 768){
@@ -41,25 +43,25 @@ sliderProto.prototype.mediaScreenSlides = function () {
     }else if($(window).width() < 576){
         return this.activeSlidesXs;
     }
-};
+}
 
 /**
  * Counts the width of each slide item
  * arguments: slideMargin property
  * @return int
  */
-sliderProto.prototype.slideWidth = function(){
+slideWidth(){
     if(this.slideMargin){
         return (100/this.mediaScreenSlides()) - this.slideMargin;
     }else{
         return (100/this.mediaScreenSlides());
     }
-};
+}
 
 /**
  * Clone slide if no full quantity to view
  */
-sliderProto.prototype.cloneSlide = function(){
+cloneSlide(){
     var sliderContainer = $('#'+this.id);
     var allSlidersItems = $(sliderContainer).find('.slider__item');
 
@@ -78,20 +80,20 @@ sliderProto.prototype.cloneSlide = function(){
         imgQuantity = allSlidersItems.length % this.mediaScreenSlides();
         m++;
     }
-};
+}
 
 /**
  * Push all items of slider in array
  */
-sliderProto.prototype.slide = function(){
-    var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.slider__item');
+slide(){
+    let sliderContainer = $('#'+this.id);
+    let allSlidersItems = $(sliderContainer).find('.slider__item');
 
     $(allSlidersItems).addClass(''+this.hiddenClass);
     this.slidesQuantity = allSlidersItems.length;
     this.arr = [];
 
-    for(var i = 0; i < this.slidesQuantity; i++){
+    for(let i = 0; i < this.slidesQuantity; i++){
         this.arr.push(allSlidersItems[i]);
     }
 };
@@ -99,14 +101,14 @@ sliderProto.prototype.slide = function(){
 /**
  * Remove active class for all slides
  */
-sliderProto.prototype.removeAllActiveItems = function (){
+removeAllActiveItems(){
     $('#'+this.id).find('.slider__item').removeClass('animated '+''+this.slideEffect);
     $('#'+this.id).find('.slider__item').removeClass(''+this.activeClass).addClass(''+this.hiddenClass).removeAttr('style');
     $('.slider__bullets').find('.slider__dot').removeClass(''+this.activeClass);
-};
+}
 
 
-sliderProto.prototype.setSlides = function(arr){
+setSlides(arr){
     $(arr).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
 
     if(this.slideEffect){
@@ -118,12 +120,12 @@ sliderProto.prototype.setSlides = function(arr){
     }else{
         $(arr).css({'width': this.slideWidth()+'%'});
     }
-};
+}
 
 /**
  * Build dots if show true
  */
-sliderProto.prototype.setBullets = function(){
+setBullets(){
     if(this.showBullets === true) {
         var finalQuantityOfSlides = 0;
         $('#'+this.id).append("<div class='slider__bullets'></div>");
@@ -140,12 +142,12 @@ sliderProto.prototype.setBullets = function(){
         var allSlidersDots = $('.slider__bullets').find('.slider__dot');
         $(allSlidersDots[0]).addClass(''+this.activeClass);
     }
-};
+}
 
 /**
  * Build arrows if show arrows true
  */
-sliderProto.prototype.setArrows = function(){
+setArrows(){
     if(this.showArrows === true){
         $('#'+this.id).append(
             '<div class="slider__arrows">' +
@@ -153,25 +155,25 @@ sliderProto.prototype.setArrows = function(){
             '<span class="slider__next"></span>' +
             '</div>');
     }
-};
+}
 
 /**
  * Set slides to first load
  */
-sliderProto.prototype.setActiveSlides = function(){
-    var sliderContainer = $('#'+this.id);
-    var allSlidersItems = $(sliderContainer).find('.slider__item');
-    for(var j = 0; j < this.mediaScreenSlides(); j++){
-        $(allSlidersItems[j]).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
+setActiveSlides(){
+    let sliderContainer = $('#'+this.id);
+    let allSlidersItems = $(sliderContainer).find('.slider__item');
+    for(let i = 0; i < this.mediaScreenSlides(); i++){
+        $(allSlidersItems[i]).addClass(''+this.activeClass).removeClass(''+this.hiddenClass);
         this.setSlides(this.arr[this.counter]);
         this.counter++;
     }
-};
+}
 
 /**
  * Right click button
  */
-sliderProto.prototype.nextArrow = function(){
+nextArrow(){
     var self = this;
     var allSlidersDots = $('.slider__bullets').find('.slider__dot');
     var nextBtn = $('.slider__arrows').find('.slider__next');
@@ -194,12 +196,12 @@ sliderProto.prototype.nextArrow = function(){
         }
     });
 
-};
+}
 
 /**
  * Left click button
  */
-sliderProto.prototype.prevArrow = function(){
+prevArrow(){
     var self = this;
     var allSlidersDots = $('.slider__bullets').find('.slider__dot');
     var prevBtn = $('.slider__arrows').find('.slider__prev');
@@ -229,12 +231,12 @@ sliderProto.prototype.prevArrow = function(){
             self.counter = self.arr.length;
         }
     });
-};
+}
 
 /**
  * Functionally for auto run slider
  */
-sliderProto.prototype.run = function(){
+run(){
         var allSlidersDots = $('.slider__bullets').find('.slider__dot');
         this.removeAllActiveItems();
         if(this.counter >= this.arr.length) {
@@ -248,12 +250,12 @@ sliderProto.prototype.run = function(){
         if(this.counter >= this.arr.length) {
             this.counter = 0;
         }
-};
+}
 
 /**
  *  Functionally for touch on dots
  */
-sliderProto.prototype.touchBullets = function(){
+touchBullets(){
     var self = this;
     var allSlidersDots = $('.slider__bullets').find('.slider__dot');
 
@@ -271,12 +273,12 @@ sliderProto.prototype.touchBullets = function(){
         self.counter = actualDots;
     });
 
-};
+}
 
 /**
  *  Set auto running & stop hover of slider
  */
-sliderProto.prototype.setPlayStopHover = function() {
+setPlayStopHover() {
     var self = this;
     var interval;
 
@@ -295,42 +297,44 @@ sliderProto.prototype.setPlayStopHover = function() {
             }, self.slideTime);
         })
     }
-};
+}
 
 /**
  * Init function for slider
  */
-sliderProto.prototype.init = function(){
-    this.cloneSlide();
+init(){
+    //this.cloneSlide();
     this.slide();
-    this.setBullets();
-    this.setArrows();
+    //this.setBullets();
+    //this.setArrows();
     this.setActiveSlides();
-    this.nextArrow();
-    this.prevArrow();
-    this.touchBullets();
+    //this.nextArrow();
+    //this.prevArrow();
+    //this.touchBullets();
     this.setPlayStopHover();
-};
+}
 
+} /***end class SliderUniversal
 /**
  * Parameters for user
  */
 $(document).ready(function(){
+    'use strict';
     var sliderParams = {
         id: 'slider-un',
-        activeSlidesLg: 4,
+        activeSlidesLg: 2,
         activeSlidesMd: 3,
         activeSlidesSm: 2,
         activeSlidesXs: 1,
         slideTime: 3000,
         slideEffect: 'fadeIn',
-        slideMargin: 2,
-        autoSlide: true,
-        onHoverStop: true,
+        slideMargin: 3,
+        autoSlide: false,
+        onHoverStop: false,
         showArrows: true,
         showBullets: true,
     };
 
-    var slider = new sliderProto(sliderParams);
+    const slider = new SliderUniversal(sliderParams);
     slider.init();
 });
