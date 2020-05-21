@@ -12,13 +12,16 @@
       display: none;
     }
     &.active{
-      display: block;
+      display: flex;
+      justify-content: center;
       float:left;
       height:auto;
       cursor: pointer;
     }
   }
   &__img{
+    height: 200px;
+    object-fit: cover;
   }
   &__bullets{
     display: flex;
@@ -50,7 +53,7 @@
   &__prev,
   &__next{
     position: absolute;
-    top: 25%;
+    top: 27%;
     margin-top: 12px;
     &:before{
       content: "";

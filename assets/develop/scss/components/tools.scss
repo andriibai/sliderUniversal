@@ -1,5 +1,5 @@
 html{
-  background: #ededed;
+  background: #fff;
 }
 
 html, body {
@@ -38,9 +38,9 @@ section{
   flex: 1 0 auto;
 }
 h1{
-  color: #414141;
+  color: #000;
   text-align: center;
-  font-size: 36px;
+  font-size: 30px;
   margin: 40px 0 15px 0;
   @include md-max{
     font-size: 28px;
@@ -48,7 +48,7 @@ h1{
 }
 
 .header{
-  background: #fff;
+  background: #001638;
   &__content{
     height: 80px;
     @include flex();
@@ -57,21 +57,19 @@ h1{
   &__logo{
     width: 200px;
     font-size: 26px;
-    font-weight: bold;
-    color: #c72f4e;
+    font-weight: 500;
+    color: #ffffff;
   }
   &__btn{
     font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    background: #c72f4e;
-    border-radius: 4px;
+    color: #000;
+    background: #ffffff;
     padding: 10px 20px;
   }
 }
 .footer{
   height: 80px;
-  background: #363636;
+  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;

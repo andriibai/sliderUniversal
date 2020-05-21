@@ -1,11 +1,11 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var cssnano = require('gulp-cssnano');
-var browserSync = require('browser-sync').create();
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var cache = require('gulp-cache');
+let gulp = require('gulp');
+let sass = require('gulp-sass');
+let cssnano = require('gulp-cssnano');
+let browserSync = require('browser-sync').create();
+let concat = require('gulp-concat');
+let uglify = require('gulp-uglify-es').default;
+let rename = require('gulp-rename');
+let cache = require('gulp-cache');
 
 var paths = {
     html: './*.html',
