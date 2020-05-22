@@ -1,59 +1,155 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Slider UN</title>
-    <link rel="stylesheet" href="assets/prod/css/slider-un.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Slider UN</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+  <link rel="stylesheet" href="assets/prod/css/slider-un.min.css">
 </head>
 
 <body>
-    <header class="header">
-        <div class="wrapper">
-            <div class="header__content">
-                <a class="header__logo" href="/">SliderUN</a>
-                <a class="header__btn" href="https://github.com/andriibai/sliderUniversal.git" target="_blank">Github</a>
-            </div>
-        </div>
-    </header>
+<header class="header">
+  <div class="wrapper">
+    <div class="header__content">
+      <a class="header__logo" href="/">SliderUN</a>
+      <div class="header__wrap-btn">
+        <a class="header__btn" href="https://github.com/andriibai/sliderUniversal.git" target="_blank">View On Github</a>
+        <a class="header__btn" href="https://github.com/andriibai/sliderUniversal/archive/master.zip" target="_blank">Download Now</a>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <h1>Slider on your page</h1>
+<h1>Slider on your page</h1>
 
 <section>
-    <div class="wrapper">
-        <div id="slider-un" class="slider">
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/1.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/2.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/4.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/5.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/6.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/7.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/8.jpg" alt="" title="">
-            </div>
-            <div class="slider__item">
-                <img class="slider__img" src="assets/develop/img/9.jpg" alt="" title="">
-            </div>
-        </div>
+  <div class="wrapper">
+
+    <div id="slider-un" class="slider">
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/1.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/2.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/4.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/5.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/6.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/7.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/8.jpg" alt="" title="">
+      </div>
+      <div class="slider__item">
+        <img class="slider__img" src="assets/develop/img/9.jpg" alt="" title="">
+      </div>
     </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="wrapper">
+    <div class="guide-wrap">
+      <div>
+        <h2>Set up your HTML markup</h2>
+        <img src="assets/develop/img/html-markup.jpg" alt="">
+      </div>
+      <div>
+        <h2>Setup up your JS</h2>
+        <pre>
+        <code class="code-example">
+            $(document).ready(function () {
+                'use strict'
+                let params = {
+                    id: 'slider-un',
+                    activeSlidesLg: 1,
+                    activeSlidesMd: 2,
+                    activeSlidesSm: 2,
+                    activeSlidesXs: 1,
+                    slideTime: 3000,
+                    slideEffect: 'animate__pulse',
+                    slideMargin: 3,
+                    slideHeight: 200,
+                    autoSlide: false,
+                    onHoverStop: true,
+                    showArrows: true,
+                    showBullets: true
+                }
+
+                const slider = new SliderUniversal(params)
+                slider.init()
+            })
+        </code>
+        </pre>
+      </div>
+      <div class="settings-wrap">
+        <h2>Settings</h2>
+
+        <b>activeSlidesLg</b><br>
+        Shows the number of slides on media screens >= 992
+        <hr>
+
+        <b>activeSlidesMd</b><br>
+        Shows the number of slides on  on media screens  >= 768
+        <hr>
+
+        <b>activeSlidesSm</b><br>
+        Shows the number of slides on  on media screens >= 576
+        <hr>
+
+        <b>activeSlidesXs</b><br>
+        Shows the number of slides on  on media screens < 576
+        <hr>
+
+        <b>slideTime</b><br>
+        Autoplay Speed in milliseconds
+        <hr>
+
+        <b>slideEffect</b><br>
+        add effect from library <a href="https://animate.style/" target="_blank">animate.style</a>
+        <hr>
+
+        <b>slideMargin</b><br>
+        Custom margin between images
+        <hr>
+
+        <b>slideHeight</b><br>
+        Custom height slides
+        <hr>
+
+        <b>autoSlide</b><br>
+        Enables Autoplay
+        <hr>
+
+        <b>onHoverStop</b><br>
+        Autoplay Speed in milliseconds
+        <hr>
+
+        <b>showArrows</b><br>
+        Prev/Next Arrows
+        <hr>
+
+        <b>showBullets</b><br>
+        Show bullet indicators
+        <hr>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer class="footer">
-    <span class="footer__copyright">universalSlider 2020 ver1.0.2</span>
+  <span class="footer__copyright">SliderUN 2020 ver1.0.2</span>
 </footer>
-    <script src="assets/develop/js/jquery.min.js"></script>
-    <script src="assets/develop/js/slider-un.js"></script>
+<script src="assets/develop/js/jquery.min.js"></script>
+<script src="assets/develop/js/slider-un.js"></script>
 </body>
 </html>

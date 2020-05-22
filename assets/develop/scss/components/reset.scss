@@ -64,8 +64,7 @@ q:before {
 }
 
 a img,
-fieldset,
-hr {
+fieldset{
   border: 0
 }
 
@@ -75,7 +74,7 @@ mark {
 
 table {
   border-collapse: collapse;
-  border-spacing: 0
+  border-spacing: 0;
 }
 
 .table_wrap {

@@ -19,6 +19,7 @@ class SliderUniversal {
     this.slideTime = params.slideTime
     this.slideEffect = params.slideEffect
     this.slideMargin = params.slideMargin
+    this.slideHeight = params.slideHeight
     this.autoSlide = params.autoSlide
     this.onHoverStop = params.onHoverStop
     this.activeArrows = params.activeArrows
@@ -73,7 +74,7 @@ class SliderUniversal {
       let imageClone = $(allSlidersItems[m]).find('img').clone()
       let imageAttr = imageClone.attr('src')
       $('#' + this.id).append('<div class="' + classAttr + '">' +
-        '<img src="' + imageAttr + ' " alt />' +
+        '<img class="slider__img" src="' + imageAttr + ' " alt />' +
         '</div>')
 
       allSlidersItems.length = allSlidersItems.length + 1
@@ -111,7 +112,7 @@ class SliderUniversal {
     $(arr).addClass('' + this.activeClass).removeClass('' + this.hiddenClass)
 
     if (this.slideEffect) {
-      $(arr).addClass('animated ' + '' + this.slideEffect)
+      $(arr).addClass('animate__animated ' + '' + this.slideEffect)
     }
 
     if (this.slideMargin) {
@@ -122,6 +123,10 @@ class SliderUniversal {
       })
     } else {
       $(arr).css({ 'width': this.slideWidth() + '%' })
+    }
+
+    if (this.slideHeight) {
+      $(arr).css({ 'height': this.slideHeight + 'px' })
     }
   }
 
@@ -331,13 +336,14 @@ $(document).ready(function () {
   'use strict'
   let params = {
     id: 'slider-un',
-    activeSlidesLg: 3,
+    activeSlidesLg: 1,
     activeSlidesMd: 2,
     activeSlidesSm: 2,
     activeSlidesXs: 1,
     slideTime: 3000,
-    slideEffect: 'fadeIn',
+    slideEffect: 'animate__pulse',
     slideMargin: 3,
+    slideHeight: 250,
     autoSlide: false,
     onHoverStop: true,
     showArrows: true,

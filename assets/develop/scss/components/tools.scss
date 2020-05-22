@@ -60,11 +60,21 @@ h1{
     font-weight: 500;
     color: #ffffff;
   }
+  &__wrap-btn{
+    display: flex;
+    justify-content: space-between;
+    width: 390px;
+  }
   &__btn{
     font-size: 20px;
-    color: #000;
-    background: #ffffff;
+    color: #fff;
+    background: #a61d1d;
     padding: 10px 20px;
+    transition: .3s;
+    &:hover{
+      color: #000;
+      background: #fff;
+    }
   }
 }
 .footer{
@@ -76,5 +86,30 @@ h1{
   flex: 0 0 auto;
   &__copyright{
     color: #fff;
+  }
+}
+
+.code-example{
+  display: block;
+  color: #333;
+  background: #f8f8f8;
+  padding: 2rem;
+  line-height: 1.4;
+}
+.guide-wrap{
+  img{
+    width: 100%;
+  }
+  >div{
+    margin-bottom: 30px;
+  }
+  h2{
+    margin-bottom: 20px;
+  }
+  .settings-wrap{
+    line-height: 1.8;
+    hr{
+      margin-bottom: 10px;
+    }
   }
 }

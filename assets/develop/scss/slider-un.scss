@@ -1,4 +1,3 @@
-@import "components/lib";
 @import "components/mixins";
 @import "components/reset";
 @import "components/tools";
@@ -20,7 +19,8 @@
     }
   }
   &__img{
-    height: 200px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
   &__bullets{
