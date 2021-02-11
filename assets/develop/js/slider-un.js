@@ -9,6 +9,7 @@
  * Slider parameter
  * @param sliderParams
  */
+
 class SliderUniversal {
   constructor (params) {
     this.id = params.id
