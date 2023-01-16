@@ -1,60 +1,66 @@
 @import "components/lib";
-
 @import "components/mixins";
-
 @import "components/reset";
-
 @import "components/tools";
 
-.slider{
+.slider {
   width: 100%;
   position: relative;
-  &__item{
-    &.hidden{
+
+  &__item {
+    &.hidden {
       display: none;
     }
-    &.active{
+
+    &.active {
       display: block;
-      float:left;
-      height:auto;
+      float: left;
+      height: auto;
       cursor: pointer;
     }
   }
-  &__img{
+
+  &__img {
   }
-  &__bullets{
+
+  &__bullets {
     display: flex;
     justify-content: center;
-    width:100%;
+    width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
-    cursor:pointer;
+    cursor: pointer;
   }
-  &__dot{
-    display:inline-block;
-    width:16px;
-    height:16px;
-    background:#fff;
-    cursor:pointer;
-    border-radius:16px;
-    margin:0 20px;
-    border:1px solid #c72f4e;
-    @include md-max{
-      margin:0 6px;
+
+  &__dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 16px;
+    margin: 0 20px;
+    border: 1px solid #c72f4e;
+    @include md-max {
+      margin: 0 6px;
     }
-    &.active{
+
+    &.active {
       background: #c72f4e;
     }
   }
-  &__arrows{
+
+  &__arrows {
 
   }
+
   &__prev,
-  &__next{
+  &__next {
     position: absolute;
     top: 25%;
     margin-top: 12px;
-    &:before{
+
+    &:before {
       content: "";
       position: relative;
       display: inline-block;
@@ -66,10 +72,13 @@
       cursor: pointer;
     }
   }
-  &__prev{
+
+  &__prev {
     left: -10px;
-    transform: rotateZ(-45deg);}
-  &__next{
+    transform: rotateZ(-45deg);
+  }
+
+  &__next {
     right: -10px;
     transform: rotateZ(135deg);
   }
